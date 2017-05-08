@@ -1,7 +1,13 @@
 # robot-if-else
-#### 启动数据库  mongodb 
+#### 启动数据库  mongodb
 [https://docs.mongodb.com/manual/installation/](https://docs.mongodb.com/manual/installation/)
+
 #### 运行后台程序 robot-student-management
+
+git clone robot-student-management
+cd robot-student-management
+npm install
+npm start
 
 ```
 ➜  robot-if-else git:(master) git clone https://github.com/Aym-fuhong/robot-student-management.git
@@ -14,7 +20,7 @@ Receiving objects: 100% (250/250), 30.66 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (155/155), done.
 Checking connectivity... done.
 
-➜  robot-if-else git:(master) ✗ cd robot-student-management 
+➜  robot-if-else git:(master) ✗ cd robot-student-management
 ➜  robot-student-management git:(master) npm start
 
 > mongoose01@1.0.0 start /home/zhyingjia/PythonProjects/robot-if-else/robot-student-management
@@ -42,7 +48,7 @@ pip3 install -U git+https://github.com/youfou/wxpy.git@develop
  - 运行程序
 
 ```
-➜  robot-if-else git:(master) ✗ ./robot.py 
+➜  robot-if-else git:(master) ✗ ./robot.py
 
 Getting uuid of QR code.
 INFO:itchat:Getting uuid of QR code.
