@@ -23,7 +23,7 @@ session = requests.Session()
 wenyang = ensure_one(bot.friends().search('文洋'))
 
 # 单群人数限制
-single_group_limit = 300
+single_group_limit = 450
 
 # 所有 CGC 群列表
 # 目前为简单处理方式 (按群名), 将来可加强
