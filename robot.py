@@ -28,7 +28,7 @@ single_group_limit = 450
 # 所有 CGC 群列表
 # 目前为简单处理方式 (按群名), 将来可加强
 cgc_groups = list(filter(
-    lambda x: re.search(r'学生群|教练群', str(x.name)),
+    lambda x: re.search(r'女性编程日|教练群|学员群', str(x.name)),
     bot.groups()
 ))
 
