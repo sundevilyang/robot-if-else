@@ -28,7 +28,7 @@ single_group_limit = 450
 # 所有 CGC 群列表
 # 目前为简单处理方式 (按群名), 将来可加强
 cgc_groups = list(filter(
-    lambda x: re.search(r'女性编程日|教练群|学员群', str(x.name)),
+    lambda x: re.search(r'女性编程日|教练群|学员群|Coding Day', str(x.name)),
     bot.groups()
 ))
 
@@ -96,7 +96,7 @@ def get_new_member_name(msg):
 def welcome(msg):
     name = get_new_member_name(msg)
     if name:
-        return '欢迎 {}加入😉，请更改群名片（格式：角色-职业-名字'.format(name)
+        return '欢迎 {}😉，请更改群名片（格式：城市-角色-职业-名字），记得去 https://girlscodingday.org/ 报名哦'.format(name)
 
 
 # 在群中回复用户文本消息　
