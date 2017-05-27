@@ -22,6 +22,9 @@ session = requests.Session()
 
 wenyang = ensure_one(bot.friends().search('文洋'))
 
+# 管理员列表，将来可以把其他运营人员加进去
+admins = (wenyang,)
+
 # 单群人数限制
 single_group_limit = 450
 
@@ -72,6 +75,52 @@ def get_reaction(func):
     return wrapper
 
 
+def from_admin(msg):
+    """
+    判断 msg 的发送者是否为管理员
+    """
+    if not isinstance(msg, Message):
+        raise TypeError('expected Message, got {}'.format(type(msg)))
+    from_user = msg.member if isinstance(msg.chat, Group) else msg.sender
+    return from_user in admins
+
+
+# 远程踢人命令: 移出 @<需要被移出的人>
+rp_kick = re.compile(r'^移出\s*@(.+?)(?:\u2005?\s*$)')
+
+
+def remote_kick(msg):
+    """
+    判断
+        1. 消息中是否包含踢人命令
+        2. 消息是否来自管理员
+    
+    若满足条件，则执行移出，并返回回复文本；若未满足条件，也可能返回回复文本，作为错误提示
+    
+    :return: 回复文本 (无需回复时为 None)
+    """
+    if msg.type is TEXT:
+        match = rp_kick.search(msg.text)
+        if match:
+            name_to_kick = match.group(1)
+
+            if not from_admin(msg):
+                # logger.warning('{} tried to kick {}'.format(
+                #     msg.member.name, name_to_kick))
+                return '感觉有点不对劲… @{}'.format(msg.member.name)
+
+            member_to_kick = ensure_one(list(filter(
+                lambda x: x.name == name_to_kick, msg.chat)))
+
+            if member_to_kick in admins:
+                # logger.error('{} tried to kick {} whom was an admin'.format(
+                #     msg.member.name, member_to_kick.name))
+                return '无法移出 @{}'.format(member_to_kick.name)
+
+            member_to_kick.remove()
+            return '成功移出 @{}'.format(member_to_kick.name)
+
+
 # 新人入群通知的匹配正则
 rp_new_member_name = (
     re.compile(r'^"(.+)"通过'),
@@ -109,8 +158,8 @@ def auto_reply_text_in_groups(msg, reaction):
     # 使用装饰器后，会自动执行 `text` 类的操作
     # 但其他类型的操作需要在被装饰函数内实现
 
-    # 在这个函数中，除了回复文本外，没有其他额外的操作，所以直接 pass (下同)
-    pass
+    # 会判断消息 / 满足时才会踢人 / 可能会回复消息
+    return remote_kick(msg)
 
 
 # 机器人自动接受好友请求
@@ -118,6 +167,20 @@ def auto_reply_text_in_groups(msg, reaction):
 @bot.register(msg_types=FRIENDS)
 @get_reaction
 def auto_accept_friends(msg, reaction):
+    pass
+
+
+# 手动加为好友后自动发送消息
+# noinspection PyUnusedLocal
+@bot.register(Friend, NOTE)
+@get_reaction
+def manually_accept_friends(msg):
+    # 需要服务端判断消息文本中是否包含 "现在可以开始聊天了"
+    # 若包含，需回复加为好友后的第一句话
+
+    # Todo: 请在服务端实现后去掉这个 raise
+    raise NotImplementedError
+
     pass
 
 
