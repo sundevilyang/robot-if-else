@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 for m in 'requests', 'urllib3':
     logging.getLogger(m).setLevel(logging.WARNING)
 
-bot = Bot(cache_path=True, console_qr=True)
+bot = Bot(cache_path=True, console_qr=False)
 
 # 开启 puid 获取功能，指定 puid 映射数据的保存路径
 bot.enable_puid('wxpy_puid.pkl')
