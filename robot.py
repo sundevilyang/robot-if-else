@@ -145,7 +145,7 @@ def get_new_member_name(msg):
 def welcome(msg):
     name = get_new_member_name(msg)
     if name:
-        return '欢迎 {}😉，跟大家打个招呼简单自我介绍一下吧！（1.请更改名字，格式：城市-角色-职业-名字；2.记得去 https://girlscodingday.org/ 报名哦'.format(name)
+        return '欢迎 {}😉'.format(name)
 
 
 # 在群中回复用户文本消息　
